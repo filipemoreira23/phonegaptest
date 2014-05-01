@@ -37,13 +37,148 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
+        /*var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
-        console.log('Received Event: ' + id);
+        console.log('Received Event: ' + id);*/
     }
 };
+
+$(document).ready(function() {
+    var table = $("#main");
+    var gameTimePanel = $("#gameTime");
+    var watTimePanel = $("#watTime");
+    var scorePanel = $("#score");
+    var failPanel = $("#fail");
+
+    var colors = ["r","g","b","y"];
+
+    var gameTime = 10;
+    var watTime = 1000;
+    var score = 0;
+    var fail = 0;
+
+    var gameTimeInterval;
+    var watTimeInterval;
+
+    var wat;
+
+    gameTimeInterval = setInterval(function(){
+        gameTime--;
+        updateGameTime();
+        if(gameTime<=0)
+            endgame();
+    },1000);
+
+    watTimeInterval = setInterval(function(){
+        createWat();
+    },watTime);
+
+    function createWat(){
+        $(".wat").remove();
+        var color = randomColor();
+        wat = $("<div/>",{
+            id: color
+        }).addClass("wat");
+        table.append(wat);
+    }
+
+    function randomColor(){
+        var index = Math.floor((Math.random() * 4));
+        return colors[index];
+    }
+
+    function updateGameTime(){
+        gameTimePanel.text(gameTime);
+    }
+
+    function updateScore(){
+        scorePanel.text(score);
+    }
+
+    function updateFail(){
+        failPanel.text(fail);
+    }
+
+    function updateAll(){
+        updateGameTime();
+        updateScore();
+        updateFail();
+    }
+
+    function checkFail(){
+        if(fail >= 3){
+            endgame();
+        }
+    }
+
+    function endgame(){
+        clearInterval(gameTimeInterval);
+        clearInterval(watTimeInterval);
+        alert("Fim de jogo!");
+        location.reload();
+    }
+
+    $(document).keydown(function(event){
+        var hit = false;
+        if(event.keyCode==37){
+            if(wat.attr("id")=="y"){
+                score++;
+                gameTime+=2;
+                hit = true;
+            }else{
+                fail++;
+            }
+            wat.animate({left: "7%"},50);
+            wat.fadeOut(200);
+        }
+        if(event.keyCode==38){
+            if(wat.attr("id")=="r"){
+                score++;
+                gameTime+=2;
+                hit = true;
+            }else{
+                fail++;
+            }
+            wat.animate({top: "7%"},50);            
+            wat.fadeOut(200);
+        }
+        if(event.keyCode==39){
+            if(wat.attr("id")=="g"){
+                score++;
+                gameTime+=2;
+                hit = true;
+            }else{
+                fail++;
+            }
+            wat.animate({left: "93%"},50);          
+            wat.fadeOut(200);
+        }
+        if(event.keyCode==40){
+            if(wat.attr("id")=="b"){
+                score++;
+                gameTime+=2;
+                hit = true;
+            }else{
+                fail++;
+            }
+            wat.animate({top: "93%"},50);           
+            wat.fadeOut(200);
+        }
+        if(hit){
+            if(watTime>300){
+                watTime-=(score/2);
+                clearInterval(watTimeInterval);
+                watTimeInterval = setInterval(function(){
+                    createWat();
+                },watTime);
+            }
+        }
+        updateAll();
+        checkFail();
+    });
+});

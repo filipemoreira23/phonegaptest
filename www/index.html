@@ -27,14 +27,20 @@
         <title>Hello World</title>
     </head>
     <body>
-        <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+            <div id="main">
+                <div id="top_panel"></div>
+                <div id="bottom_panel"></div>
+                <div id="right_panel"></div>
+                <div id="left_panel"></div>
             </div>
-        </div>
+            <div id="side_menu">
+                <p>
+                    Time: <b id="gameTime">10</b>&nbsp&nbspScore: <b id="score">0</b>&nbsp&nbspFails: <b id="fail">0</b>
+                </p>
+            </div>
         <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="jquery.ui.touch-punch.min"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
