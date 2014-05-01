@@ -65,6 +65,8 @@ $(document).ready(function() {
     var gameTimeInterval;
     var watTimeInterval;
 
+    var hit = false;
+
     var wat;
 
     gameTimeInterval = setInterval(function(){
@@ -123,52 +125,59 @@ $(document).ready(function() {
         location.reload();
     }
 
-    $(document).keydown(function(event){
-        var hit = false;
-        if(event.keyCode==37){
-            if(wat.attr("id")=="y"){
-                score++;
-                gameTime+=2;
-                hit = true;
-            }else{
-                fail++;
-            }
-            wat.animate({left: "7%"},50);
-            wat.fadeOut(200);
+    $$(document).swipeLeft(function(){
+        if(wat.attr("id")=="y"){
+            score++;
+            gameTime+=2;
+            hit = true;
+        }else{
+            fail++;
         }
-        if(event.keyCode==38){
-            if(wat.attr("id")=="r"){
-                score++;
-                gameTime+=2;
-                hit = true;
-            }else{
-                fail++;
-            }
-            wat.animate({top: "7%"},50);            
-            wat.fadeOut(200);
+        wat.animate({left: "7%"},50);
+        wat.fadeOut(200);
+        hit();
+    });
+
+    $$(document).swipeUp(function(){
+        if(wat.attr("id")=="r"){
+            score++;
+            gameTime+=2;
+            hit = true;
+        }else{
+            fail++;
         }
-        if(event.keyCode==39){
-            if(wat.attr("id")=="g"){
-                score++;
-                gameTime+=2;
-                hit = true;
-            }else{
-                fail++;
-            }
-            wat.animate({left: "93%"},50);          
-            wat.fadeOut(200);
+        wat.animate({top: "7%"},50);            
+        wat.fadeOut(200);
+        hit();
+    });
+
+    $$(document).swipeRight(function(){
+        if(wat.attr("id")=="g"){
+            score++;
+            gameTime+=2;
+            hit = true;
+        }else{
+            fail++;
         }
-        if(event.keyCode==40){
-            if(wat.attr("id")=="b"){
-                score++;
-                gameTime+=2;
-                hit = true;
-            }else{
-                fail++;
-            }
-            wat.animate({top: "93%"},50);           
-            wat.fadeOut(200);
+        wat.animate({left: "93%"},50);          
+        wat.fadeOut(200);
+        hit();
+    });
+
+    $$(document).swipeDown(function(){
+        if(wat.attr("id")=="b"){
+            score++;
+            gameTime+=2;
+            hit = true;
+        }else{
+            fail++;
         }
+        wat.animate({top: "93%"},50);           
+        wat.fadeOut(200);
+        hit();
+    });
+
+    function hit(){
         if(hit){
             if(watTime>300){
                 watTime-=(score/2);
@@ -177,8 +186,9 @@ $(document).ready(function() {
                     createWat();
                 },watTime);
             }
+            hit = false;
         }
         updateAll();
         checkFail();
-    });
+    }
 });
