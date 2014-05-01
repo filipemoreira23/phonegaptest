@@ -125,7 +125,7 @@ $(document).ready(function() {
         location.reload();
     }
 
-    $$(document).swipeLeft(function(){
+    $$("#main").swipeLeft(function(){
         if(wat.attr("id")=="y"){
             score++;
             gameTime+=2;
@@ -138,7 +138,7 @@ $(document).ready(function() {
         hit();
     });
 
-    $$(document).swipeUp(function(){
+    $$("#main").swipeUp(function(){
         if(wat.attr("id")=="r"){
             score++;
             gameTime+=2;
@@ -151,7 +151,7 @@ $(document).ready(function() {
         hit();
     });
 
-    $$(document).swipeRight(function(){
+    $$("#main").swipeRight(function(){
         if(wat.attr("id")=="g"){
             score++;
             gameTime+=2;
@@ -164,7 +164,7 @@ $(document).ready(function() {
         hit();
     });
 
-    $$(document).swipeDown(function(){
+    $$("#main").swipeDown(function(){
         if(wat.attr("id")=="b"){
             score++;
             gameTime+=2;
